@@ -60,4 +60,23 @@ After any modification:
 - Never introduce structural drift.
 - Treat AGENTS.md as a living but controlled governance contract.
 
+9. AI Token Optimization Rule
+
+AGENTS.md serves not only as governance documentation but also as a context optimization layer for AI systems.
+
+- Any code change must trigger evaluation of whether updating AGENTS.md would:
+  - Reduce future token consumption,
+  - Improve architectural clarity,
+  - Make project structure easier to understand,
+  - Reduce ambiguity for future analysis,
+  - Improve deterministic reasoning about the repository.
+
+- If updating AGENTS.md would materially improve AI context efficiency or reduce the need to re-analyze large portions of the repository, it must be updated in the same task.
+
+- AGENTS.md must act as a compressed architectural map of the project, allowing AI systems to reason about structure without scanning the entire repository.
+
+- If a change introduces new structural patterns, conventions, integration points, or execution flows, AGENTS.md must be updated even if the architecture is not fundamentally altered.
+
+The goal is to minimize unnecessary token usage while maximizing structural clarity and determinism.
+
 This policy is mandatory and must be enforced automatically in every interaction.
