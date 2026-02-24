@@ -1,4 +1,4 @@
-# Context Optimization Policy
+Context Optimization Policy
 
 This policy ensures efficient context usage while preserving architectural awareness and task continuity.
 
