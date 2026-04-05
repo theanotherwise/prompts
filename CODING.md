@@ -1,5 +1,8 @@
 # CODING POLICY
 
+```markdown
+# CODING POLICY
+
 ## Build And Execution
 
 - Only application-level tests may be executed.
@@ -35,3 +38,4 @@
 - Focus on files directly related to the task.
 - Avoid re-reading unchanged large files unless needed.
 - Preserve architectural consistency while optimizing token usage.
+```

@@ -14,7 +14,7 @@ The repository has three active documents:
 
 - `AGENTS.md`: repository governance and repository-purpose document.
 - `README.md`: file index for the repository.
-- `CODING.md`: coding policy document intended to be copied into AI rules or custom instructions.
+- `CODING.md`: coding policy document intended to be copied into AI rules or custom instructions in fenced Markdown form.
 
 `AGENTS.md` describes what this repository is for and what each document is responsible for.
 `CODING.md` contains the actual coding policy.
@@ -32,7 +32,7 @@ The repository has three active documents:
 - `README.md`
   Lists the files in the repository and links to them.
 - `CODING.md`
-  Contains instructions for coding work in a copy-ready format.
+  Contains instructions for coding work in a copy-ready fenced Markdown format.
 
 No other repository files are required for the current state.
 
@@ -43,7 +43,7 @@ No other repository files are required for the current state.
 - `README.md`
   Provides a clickable index of the files in the repository.
 - `CODING.md`
-  Provides the actual coding instructions that are meant to be copied and reused.
+  Provides the actual coding instructions that are meant to be copied and reused as a Markdown block.
 
 ## Execution Model
 
@@ -58,6 +58,7 @@ The repository exists only to store and maintain prompt documents.
 - `AGENTS.md` must explain the repository purpose and document roles.
 - `AGENTS.md` must not duplicate the full coding policy stored in `CODING.md`.
 - `CODING.md` is where coding instructions belong.
+- `CODING.md` should keep the policy inside a fenced `markdown` block for easy copy/paste.
 - `README.md` should stay a simple clickable file index.
 - Read `AGENTS.md` at the beginning of every session.
 - Re-read `AGENTS.md` before non-trivial changes if it may have changed.
