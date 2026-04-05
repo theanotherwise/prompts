@@ -41,7 +41,7 @@ No other repository files are required for the current state.
 - `README.md`
   Lists the files in the repository and provides a short deterministic description of each one.
 - `CODING.md`
-  Defines the coding-specific stack: behavior for build actions, file edits, context handling, shell usage, and governance awareness during code work.
+  Defines the coding-specific stack in a copy-friendly form: behavior for build actions, file edits, context handling, shell usage, and safe code-work practices.
 
 ## Execution Model
 

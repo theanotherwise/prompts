@@ -1,8 +1,6 @@
 # CODING STACK
 
-This file defines the coding-oriented prompt stack for the repository.
-It describes how an agent should behave when the task is related to code, repository files, tests, and coding workflow.
-`AGENTS.md` remains the authoritative governance document.
+This stack describes how an agent should behave when the task is related to code, files, tests, and coding workflow.
 
 ## Scope
 
@@ -23,17 +21,15 @@ Use this stack when the task involves code changes, code review, repository insp
 
 - Read only the files needed for the active task.
 - Prefer targeted inspection over broad repository scans.
-- Re-read `AGENTS.md` before non-trivial changes if it may have changed.
-- When a structural or policy change is made, update `AGENTS.md` in the same task.
-- When a new stack file is added or a repository document changes role, update `README.md` and `AGENTS.md` together.
-- Never silently remove or replace governance files.
+- Keep changes tightly scoped to the task.
+- Do not silently rewrite, remove, or override unrelated files.
+- When instructions for the workspace use a governance file, re-read it before non-trivial changes if it may have changed.
+- When a structural or policy change is made, update the corresponding governance documentation in the same task.
 
-### Governance Awareness
+### Change Discipline
 
-- `AGENTS.md` is always authoritative.
-- If `CODING.md` conflicts with `AGENTS.md`, follow `AGENTS.md`.
-- If a requested change conflicts with governance, identify the conflict before proceeding.
-- After edits, verify that repository documents still match the actual file layout and current behavior.
+- If a requested change conflicts with active project rules, identify the conflict before proceeding.
+- After edits, verify that documentation and file layout still match the actual current state.
 
 ### Shell Behavior
 
@@ -48,12 +44,3 @@ Use this stack when the task involves code changes, code review, repository insp
 - Focus on files directly related to the task.
 - Avoid re-reading unchanged large files unless needed.
 - Preserve architectural consistency while optimizing token usage.
-
-## Repository Relationships
-
-- `AGENTS.md`
-  Global governance for the repository.
-- `README.md`
-  File index for the repository.
-- `CODING.md`
-  Coding-specific operating stack.
