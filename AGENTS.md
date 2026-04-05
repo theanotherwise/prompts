@@ -5,6 +5,7 @@
 This repository stores prompt stacks and governance documents for agent work.
 Each prompt stack targets a specific kind of task, for example coding.
 A stack defines expected agent behavior for that domain, including build restrictions, file-handling rules, context-loading expectations, shell behavior, and interaction with repository governance files such as `AGENTS.md`.
+These prompt stacks are intended to be copied, reused, or adapted for AI agent rules, custom instructions, system prompts, or similar configuration surfaces.
 
 The repository is documentation-only.
 It does not contain application source code, runtime services, deployment manifests, or infrastructure definitions.
@@ -64,6 +65,7 @@ No other repository files are required for the current state.
 ### Repository Scope Rules
 
 - The repository stores prompt stacks and governance documentation, not application code.
+- Prompt stack documents in this repository are intended for copy-and-adapt use in AI agent rule systems, custom instructions, and similar prompt configuration contexts.
 - Each prompt stack must have a clearly defined scope and document responsibilities specific to its task domain.
 - If a new stack document is added, `AGENTS.md` and `README.md` must be updated in the same task.
 
