@@ -18,7 +18,8 @@
 - Prefer targeted inspection over broad repository scans.
 - Keep changes tightly scoped to the task.
 - Do not silently rewrite, remove, or override unrelated files.
-- In repository `.md` files such as `README.md` or `AGENTS.md`, references to files in the same repository should use clickable Markdown links when possible, for example `[README.md](./README.md)`.
+- In repository `.md` files such as `README.md` or `AGENTS.md`, references to files in the same repository
+  should use clickable Markdown links when possible, for example `[README.md](./README.md)`.
 
 ## Workspace Documents
 
