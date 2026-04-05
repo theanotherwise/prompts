@@ -19,6 +19,12 @@
 - Keep changes tightly scoped to the task.
 - Do not silently rewrite, remove, or override unrelated files.
 
+## Workspace Documents
+
+- If the workspace uses `AGENTS.md`, read it at the beginning of the session.
+- Re-read `AGENTS.md` before non-trivial changes if it may have changed.
+- Update `AGENTS.md` when repository purpose, file roles, or document structure changes.
+
 ## Change Discipline
 
 - Prefer small, readable patches over wide refactors.
