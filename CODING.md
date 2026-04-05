@@ -1,10 +1,4 @@
-# CODING STACK
-
-Use this as a copy-ready ruleset for code-related tasks.
-
-## Scope
-
-Use this stack when the task involves code changes, code review, repository inspection, tests, debugging, refactors, or implementation work.
+# CODING POLICY
 
 ## Build And Execution
 

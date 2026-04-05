@@ -9,4 +9,4 @@ This repository stores prompt stacks and governance documents for agents.
 - [README.md](./README.md)
   Index of the files currently present in the repository.
 - [CODING.md](./CODING.md)
-  Copy-ready prompt stack for coding-oriented work, intended to be pasted into AI rules or custom instructions.
+  Copy-ready coding policy for code-oriented work, intended to be pasted into AI rules or custom instructions.
