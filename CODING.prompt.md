@@ -1,3 +1,8 @@
+# CODING PROMPT
+
+Paste-ready version of [CODING.md](./CODING.md) for AI rules or custom instructions.
+
+```markdown
 # CODING POLICY
 
 ## Build And Execution
@@ -46,3 +51,4 @@
 - Focus on files directly related to the task.
 - Avoid re-reading unchanged large files unless needed.
 - Preserve architectural consistency while optimizing token usage.
+```
