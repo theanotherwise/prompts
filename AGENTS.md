@@ -16,7 +16,7 @@ The repository has three active document layers:
 
 - `AGENTS.md`: authoritative governance contract for the repository.
 - `README.md`: human-readable index of the files currently present in the repository.
-- `CODING.md`: prompt stack for coding-oriented tasks.
+- `CODING.md`: copy-ready prompt stack for coding-oriented tasks.
 
 `AGENTS.md` is the source of truth for repository structure, responsibilities, and constraints.
 If another document diverges from `AGENTS.md`, `AGENTS.md` prevails.
@@ -31,7 +31,7 @@ If another document diverges from `AGENTS.md`, `AGENTS.md` prevails.
 
 - `AGENTS.md`: mandatory repository governance document. Must always exist.
 - `README.md`: repository index describing the purpose of each file currently stored in the repository.
-- `CODING.md`: coding prompt stack describing expected agent behavior for code-related work.
+- `CODING.md`: copy-ready coding prompt stack describing expected agent behavior for code-related work.
 
 No other repository files are required for the current state.
 
@@ -42,7 +42,7 @@ No other repository files are required for the current state.
 - `README.md`
   Lists the files in the repository and provides a short deterministic description of each one.
 - `CODING.md`
-  Defines the coding-specific stack in a copy-friendly form: behavior for build actions, file edits, context handling, shell usage, and safe code-work practices.
+  Defines the coding-specific stack in a copy-ready form for AI rules and custom instructions: behavior for build actions, file edits, context handling, shell usage, and safe code-work practices.
 
 ## Execution Model
 
