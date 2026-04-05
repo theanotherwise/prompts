@@ -11,31 +11,31 @@ The repository is documentation-only.
 Its structure has two persistent layers:
 
 - `AGENTS.md`: authoritative governance contract for repository-aware agents.
-- `README.md`: consolidated human-readable copy of all operational rules, formatted as a single copy-friendly Markdown block.
+- `CODING.md`: consolidated human-readable copy of the active repository rules, including a copy of the current `AGENTS.md` content and the operational policy bundle.
 
 `AGENTS.md` is the source of truth.
-If `README.md` and `AGENTS.md` diverge, `AGENTS.md` prevails.
+If `CODING.md` and `AGENTS.md` diverge, `AGENTS.md` prevails.
 
 ## Functional Structure
 
 - Governance layer: repository constraints, change control, and conflict handling.
 - Execution policy layer: command, test, and infrastructure restrictions.
 - Context policy layer: scope control and token-efficiency requirements.
-- Distribution layer: a single merged `README.md` that mirrors the active policy set for easy reuse.
+- Distribution layer: a single merged `CODING.md` that mirrors the active policy set for easy reuse and copy/paste.
 
 ## File Structure Explanation
 
 - `AGENTS.md`: mandatory repository governance document. Must always exist.
-- `README.md`: merged reference containing governance, build, context, and shell policies in one Markdown block.
+- `CODING.md`: merged reference containing the current `AGENTS.md` content and the repository policy bundle in one copy-friendly Markdown document.
 
 No other repository files are required for the current state.
 
 ## Module and Document Responsibilities
 
 - `AGENTS.md`
-  Defines repository purpose, document roles, operational constraints, and update obligations.
-- `README.md`
-  Provides a single copy-oriented document for humans and downstream tooling that need the full policy bundle in one place.
+  Defines repository purpose, document roles, operational constraints, structural rules, and update obligations.
+- `CODING.md`
+  Provides a single copy-oriented document for humans and downstream tooling that need the current agent instructions in one place.
 
 ## Execution Model
 
@@ -80,11 +80,11 @@ No other repository files are required for the current state.
 ## Conflict Handling
 
 - The repository cannot be reduced to a single Markdown file because `AGENTS.md` is mandatory.
-- Requests for a single consolidated document must be implemented as `README.md` plus the required `AGENTS.md`.
+- Requests for a single consolidated document must be implemented as `CODING.md` plus the required `AGENTS.md`.
 - If future requests attempt to remove `AGENTS.md`, the request must be rejected or preceded by a governance change that still preserves the mandatory existence rule.
 
 ## Change Control
 
 - Any change that introduces, removes, or renames repository files must be reflected here.
-- Any change that alters the meaning of the merged policy bundle in `README.md` must also update `AGENTS.md`.
+- Any change that alters the meaning of the merged policy bundle in `CODING.md` must also update `AGENTS.md`.
 - Documentation consolidation is allowed only if `AGENTS.md` remains present and authoritative.
