@@ -18,12 +18,6 @@ This is a documentation-only repository.
 
 The repository currently contains only `AGENTS.md`, `README.md`, and `CODING.md`.
 
-## Module and Document Responsibilities
-
-`AGENTS.md` describes the repository.
-`README.md` lists and links the files.
-`CODING.md` contains the coding instructions.
-
 ## Execution Model
 
 No runtime, build pipeline, or infrastructure.
