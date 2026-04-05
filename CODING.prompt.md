@@ -1,6 +1,6 @@
 # CODING PROMPT
 
-Paste-ready version of [CODING.md](./CODING.md) for AI rules or custom instructions.
+Paste-ready coding policy for AI rules or custom instructions.
 
 ```markdown
 # CODING POLICY

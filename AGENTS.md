@@ -16,5 +16,4 @@ Prompt-oriented files intended for direct paste into agent or custom-instruction
 
 - [AGENTS.md](./AGENTS.md): explains what this repository is for.
 - [README.md](./README.md): clickable index of the files in this repository.
-- [CODING.md](./CODING.md): canonical coding policy for code-oriented work in this repository.
-- [CODING.prompt.md](./CODING.prompt.md): paste-ready version of the coding policy for agent instructions and custom instruction surfaces.
+- [CODING.prompt.md](./CODING.prompt.md): coding policy stored in the repository's prompt-ready format for agent instructions and custom instruction surfaces.
