@@ -11,6 +11,7 @@ This is a documentation-only repository.
 ## Prompt File Format
 
 Prompt-oriented files intended for direct paste into agent or custom-instruction surfaces should be stored as paste-ready Markdown snippets in the same format as [CODING.prompt.md](./CODING.prompt.md).
+Files following the `*.prompt.md` naming convention should contain the prompt payload as Markdown inside a fenced `markdown` code block.
 
 ## Functional Structure
 

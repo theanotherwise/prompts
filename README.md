@@ -9,4 +9,4 @@ This repository stores prompt stacks and governance documents for agents.
 - [README.md](./README.md)
   Index of the files currently present in the repository.
 - [CODING.prompt.md](./CODING.prompt.md)
-  Coding policy in the repository's paste-ready fenced Markdown format for AI rules or custom instructions.
+  Coding policy in the repository's `*.prompt.md` format, with the prompt content stored inside a fenced `markdown` code block for AI rules or custom instructions.
