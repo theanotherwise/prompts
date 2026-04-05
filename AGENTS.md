@@ -12,4 +12,4 @@ This is a documentation-only repository.
 
 - `AGENTS.md`: explains what this repository is for.
 - `README.md`: clickable index of the files in this repository.
-- `CODING.md`: coding policy for AI rules or custom instructions.
+- `CODING.md`: coding policy pasted directly into agent instructions and treated there as the primary coding policy.
