@@ -20,6 +20,8 @@
 - Do not silently rewrite, remove, or override unrelated files.
 - In repository `.md` files such as `README.md` or `AGENTS.md`, references to files in the same repository
   should use clickable Markdown links when possible, for example `[README.md](./README.md)`.
+- Inside fenced `markdown` blocks intended for copy/paste, keep file references as plain text rather than
+  converting them into clickable Markdown links.
 
 ## Workspace Documents
 
