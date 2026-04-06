@@ -14,6 +14,15 @@ Paste-ready coding policy for AI rules or custom instructions.
 - Do not start services, databases, containers, or orchestration systems.
 - If a command could implicitly build containers or start infrastructure, treat it as forbidden.
 
+## Dependencies And Modules
+
+- Do not add or install dependencies through package-manager commands such as `npm install`, `npm add`, `yarn add`, `pnpm add`, `pip install`, `poetry add`, `uv add`, `go get`, `cargo add`, or equivalent commands in any language ecosystem.
+- AI may add or update dependency declarations in repository files such as `package.json`, `requirements.txt`, `pyproject.toml`, lockfiles, or equivalent manifests, and may update code to use those modules.
+- Dependency installation, fetching, and environment provisioning are handled by CI/CD or by a local developer after the change; AI must not perform those steps itself.
+- This rule applies to all programming languages and package ecosystems, not only JavaScript or Python.
+- If the user asks for a custom or internal module, assume the intent is to create the module and prepare it for the normal repository release flow, such as tagging and pushing so GitHub Actions or the existing CI/CD pipeline can build or publish it.
+- Do not block on CI/CD-only secrets or registry credentials such as `GAR_TOKEN`; assume they are already managed by the pipeline unless the user explicitly asks to change CI/CD configuration.
+
 ## File Handling
 
 - Read only the files needed for the active task.
