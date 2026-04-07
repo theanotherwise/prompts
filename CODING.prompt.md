@@ -47,9 +47,13 @@ Paste-ready coding policy for AI rules or custom instructions.
 - Ask the user for the missing namespace or runtime target only when it cannot be safely or reasonably inferred from the available context.
 - Do not perform mutating operational actions without explicit user permission.
 - Mutating actions include but are not limited to deploy, apply, edit, delete, restart, scale, exec used to change state, file modification, package installation, database writes, secret rotation, or destructive cleanup.
-- If a command or action is not explicitly covered by these rules and you can reasonably infer that it may change runtime state, do not perform it without explicit user permission.
-- You are expected to judge whether an action is state-changing based on the command semantics and the surrounding runtime context, rather than treating unclear cases as automatically safe.
 - If verifying the issue requires any state change, ask the user for permission before doing it.
+
+### Default Rule For Unspecified Runtime Actions
+
+If a command or action is not explicitly covered by these rules and you can reasonably infer that it may change runtime state, do not perform it without explicit user permission.
+
+You are expected to judge whether an action is state-changing based on the command semantics and the surrounding runtime context, rather than treating unclear cases as automatically safe.
 
 ## Dependencies And Modules
 
