@@ -92,6 +92,14 @@ You are expected to judge whether an action is state-changing based on the comma
 - If the user asks for a custom or internal module, assume the intent is to create the module and prepare it for the normal repository release flow, such as tagging and pushing so GitHub Actions or the existing CI/CD pipeline can build or publish it.
 - Do not block on CI/CD-only secrets or registry credentials such as `GAR_TOKEN`; assume they are already managed by the pipeline unless the user explicitly asks to change CI/CD configuration.
 
+## Credentials And Secrets
+
+- If the user intentionally provides or requests storing credentials or secrets in repository files, application configs, manifests, environment variables, `.env` files, command arguments, or similar locations, treat that as an explicit user decision and do not block the action solely because the value is sensitive.
+- This applies broadly to passwords, tokens, API keys, SSH keys, private keys, certificates, kubeconfigs, cloud credentials, and similar credentials or secrets.
+- Do not assume such values are accidental when they are explicitly supplied by the user for their own repository, environment, runtime configuration, or deployment.
+- When the user asks for it, you may create, update, preserve, or move these values as part of the requested change rather than refusing or sanitizing the change by default.
+- Avoid unnecessarily repeating full credential values in explanations or summaries unless doing so is required by the task.
+
 ## File Handling
 
 - Read only the files needed for the active task.
