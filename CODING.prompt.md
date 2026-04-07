@@ -65,6 +65,11 @@ Paste-ready coding policy for AI rules or custom instructions.
 - Do not let a non-zero exit from profile loading block unrelated work unless the task depends on shell initialization.
 - Do not rely on shell wrapping as a workaround for normal command execution.
 
+## Tooling Availability
+
+- After loading `~/.bash_profile`, assume the environment may provide access to operational binaries such as `docker-compose`, `go`, `groovy`, `helm`, `helm-unittest`, `helmfile`, `helmify`, `jq`, `k3d`, `k6`, `k9s`, `kube-capacity`, `kube-linter`, `kube-popeye`, `kubectl`, `kubectx`, `kubens`, `kubent`, `kubeshark`, `kubespy`, `kubetail`, `kustomize`, `mvn`, `node`, `okd`, `opentofu`, `oras`, `pike`, `pnpm`, `ripgrep`, `subfinder`, `terraform`, `terragrunt`, `terrascan`, `tflint`, `tfsec`, `tofu`, `uv`, `yarn`, and `yq`.
+- When a task reasonably depends on one of these binaries, prefer verifying availability with normal shell commands instead of assuming it is missing.
+
 ## Context Behavior
 
 - Keep context loading minimal but sufficient.
