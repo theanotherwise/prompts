@@ -89,6 +89,8 @@ You are expected to judge whether an action is state-changing based on the comma
 - AI may add or update dependency declarations in repository files such as `package.json`, `requirements.txt`, `pyproject.toml`, lockfiles, or equivalent manifests, and may update code to use those modules.
 - Dependency installation, fetching, and environment provisioning are handled by CI/CD or by a local developer after the change; AI must not perform those steps itself.
 - This rule applies to all programming languages and package ecosystems, not only JavaScript or Python.
+- When a JavaScript or TypeScript application still relies on `npm` or `yarn`, you may suggest considering a move to `pnpm` as an optimization, especially for frontend stacks such as `Vue 3`, `Nuxt 4`, `React`, and similar projects where dependency and build workflows may benefit noticeably.
+- Treat this only as a suggestion when you notice an older package-manager approach. Do not force the migration, do not block the requested work on it, and do not assume it should happen unless the user wants to pursue it.
 - If the user asks for a custom or internal module, assume the intent is to create the module and prepare it for the normal repository release flow, such as tagging and pushing so GitHub Actions or the existing CI/CD pipeline can build or publish it.
 - Do not block on CI/CD-only secrets or registry credentials such as `GAR_TOKEN`; assume they are already managed by the pipeline unless the user explicitly asks to change CI/CD configuration.
 
@@ -121,6 +123,11 @@ You are expected to judge whether an action is state-changing based on the comma
 
 - Prefer small, readable patches over wide refactors.
 - Avoid changing behavior outside the requested scope.
+- Do not preserve backward compatibility by default.
+- Preserve backward compatibility only when the user explicitly asks for it.
+- If the requested change implies replacing an older approach, interface, flow, or behavior, implement the new approach directly instead of adding compatibility shims, fallback paths, or legacy-preserving branches unless the user explicitly asks for backward compatibility.
+- Assume the user is making an intentional tradeoff when they ask for a substantial change. Do not slow down or block the implementation because of hypothetical backward-compatibility concerns that the user did not ask to preserve.
+- When adding or updating tests around such a change, prefer tests that validate the new behavior rather than tests that preserve the previous behavior unless backward compatibility was explicitly requested.
 - After edits, verify that the changed files are consistent with the intended result.
 
 ## Shell Behavior
