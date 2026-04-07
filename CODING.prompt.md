@@ -16,8 +16,11 @@ Paste-ready coding policy for AI rules or custom instructions.
 ## Runtime Verification
 
 - If the user explicitly asks to verify application state on Kubernetes, a deployment, a containerized environment, or an SSH-accessible host, read-only operational inspection is allowed.
+- If the user says that access is available, for example by stating that you have access to `kubectl`, that is sufficient permission to perform read-only verification of the problem currently being worked on.
 - Allowed read-only actions include checking logs, status, configuration, running processes, resource health, mounted files, environment state, and similar inspection-only data.
 - This allowance may include commands through tools such as `kubectl`, `docker`, `docker compose`, `podman`, `ssh`, `journalctl`, `systemctl status`, and similar operational CLIs, but only for read-only verification.
+- If a namespace, pod, deployment, service, cluster context, host, or similar runtime target is needed, infer it from the current task and repository context when reasonably possible.
+- Ask the user for the missing namespace or runtime target only when it cannot be safely or reasonably inferred from the available context.
 - Do not perform mutating operational actions without explicit user permission.
 - Mutating actions include but are not limited to deploy, apply, edit, delete, restart, scale, exec used to change state, file modification, package installation, database writes, secret rotation, or destructive cleanup.
 - If verifying the issue requires any state change, ask the user for permission before doing it.
