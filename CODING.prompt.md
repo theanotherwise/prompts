@@ -10,9 +10,17 @@ Paste-ready coding policy for AI rules or custom instructions.
 - Only application-level tests may be executed.
 - Use the project's native test runner when tests exist.
 - Do not build Docker images.
-- Do not run Docker, Docker Compose, Podman, Kubernetes, or any other container-runtime command.
 - Do not start services, databases, containers, or orchestration systems.
 - If a command could implicitly build containers or start infrastructure, treat it as forbidden.
+
+## Runtime Verification
+
+- If the user explicitly asks to verify application state on Kubernetes, a deployment, a containerized environment, or an SSH-accessible host, read-only operational inspection is allowed.
+- Allowed read-only actions include checking logs, status, configuration, running processes, resource health, mounted files, environment state, and similar inspection-only data.
+- This allowance may include commands through tools such as `kubectl`, `docker`, `docker compose`, `podman`, `ssh`, `journalctl`, `systemctl status`, and similar operational CLIs, but only for read-only verification.
+- Do not perform mutating operational actions without explicit user permission.
+- Mutating actions include but are not limited to deploy, apply, edit, delete, restart, scale, exec used to change state, file modification, package installation, database writes, secret rotation, or destructive cleanup.
+- If verifying the issue requires any state change, ask the user for permission before doing it.
 
 ## Dependencies And Modules
 
