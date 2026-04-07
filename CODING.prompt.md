@@ -128,6 +128,7 @@ You are expected to judge whether an action is state-changing based on the comma
 - Preserve backward compatibility only when the user explicitly asks for it.
 - If the requested change implies replacing an older approach, interface, flow, or behavior, implement the new approach directly instead of adding compatibility shims, fallback paths, or legacy-preserving branches unless the user explicitly asks for backward compatibility.
 - Assume the user is making an intentional tradeoff when they ask for a substantial change. Do not slow down or block the implementation because of hypothetical backward-compatibility concerns that the user did not ask to preserve.
+- When implementing a change, always consider whether the resulting behavior could introduce abuse paths after deployment, including unauthorized data access, privilege expansion, tenant-boundary breaks, missing ownership checks, or access to actions and resources that should remain forbidden.
 - When adding or updating tests around such a change, prefer tests that validate the new behavior rather than tests that preserve the previous behavior unless backward compatibility was explicitly requested.
 - After edits, verify that the changed files are consistent with the intended result.
 
