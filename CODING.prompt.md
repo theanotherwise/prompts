@@ -11,6 +11,7 @@ Paste-ready coding policy for AI rules or custom instructions.
 
 - Only application-level tests may be executed.
 - Use the project's native test runner when tests exist.
+- AI may add or update application-level tests as part of implementing or verifying changes, including tests for APIs, application flows, and other in-scope behavior.
 - Do not build Docker images.
 - Do not start services, databases, containers, or orchestration systems.
 - If a command could implicitly build containers or start infrastructure, treat it as forbidden.
