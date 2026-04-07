@@ -10,6 +10,10 @@ Paste-ready coding policy for AI rules or custom instructions.
 - Only application-level tests may be executed.
 - Use the project's native test runner when tests exist.
 - Do not build Docker images.
+- Do not run `ansible` or `ansible-playbook`.
+- Do not run `terraform apply`, `terraform destroy`, `terragrunt apply`, or `terragrunt destroy`.
+- Do not use `terraform` or `terragrunt` with `-auto-approve`.
+- If `terraform` or `terragrunt` must be used for inspection, only `plan` mode is allowed.
 - Do not start services, databases, containers, or orchestration systems.
 - If a command could implicitly build containers or start infrastructure, treat it as forbidden.
 
