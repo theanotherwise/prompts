@@ -3,7 +3,7 @@
 Paste-ready application security review prompt for AI rules or custom instructions.
 
 ```markdown
-Perform a detailed security review of the entire web application and all publicly exposed APIs. Treat this as a real application security assessment performed by a senior application security analyst and pentester reviewing production-grade code, request flows, authorization logic, data models, middleware, input validation, SSR behavior, caching, file handling, integrations, and public edge components. The stack to assess includes a Vue 3 frontend, Nuxt 4 with SSR for SEO, a Python FastAPI backend, JWT-based authentication, human-friendly URLs where a readable slug ends with a suffix such as `-xxxx` that is parsed by the backend and used to resolve a record, and any public traffic that passes through Cloudflare Workers or equivalent edge logic. Ignore and do not report missing CAPTCHA because it will be added at the end of the project, ignore and do not report missing rate limiting because it is handled by Cloudflare, and ignore and do not report hardcoded secrets in application code because secrets are injected through Kubernetes. Do not dilute the review with generic advice, do not write a shallow checklist, do not invent findings without evidence, and do not rely on frontend assumptions when backend enforcement is required.
+Perform a detailed security review of the entire web application and all publicly exposed APIs. Treat this as a real application security assessment performed by a senior application security analyst and pentester reviewing production-grade code, request flows, authorization logic, data models, middleware, input validation, SSR behavior, caching, file handling, integrations, public edge components, and third-party dependency risk. The stack to assess includes a Vue 3 frontend, Nuxt 4 with SSR for SEO, a Python FastAPI backend, JWT-based authentication, human-friendly URLs where a readable slug ends with a suffix such as `-xxxx` that is parsed by the backend and used to resolve a record, and any public traffic that passes through Cloudflare Workers or equivalent edge logic. You must also review the libraries used by the application in the JavaScript and Python ecosystems, including dependencies declared through `package.json`, lockfiles, `requirements.txt`, `pyproject.toml`, `poetry.lock`, or equivalent manifests, and determine whether any dependency appears known-vulnerable, dangerously outdated, abandoned, or inappropriate for the security posture of the application. Ignore and do not report missing CAPTCHA because it will be added at the end of the project, ignore and do not report missing rate limiting because it is handled by Cloudflare, and ignore and do not report hardcoded secrets in application code because secrets are injected through Kubernetes. Do not dilute the review with generic advice, do not write a shallow checklist, do not invent findings without evidence, and do not rely on frontend assumptions when backend enforcement is required.
 
 Write the final report in English, in a technical but readable tone, with concrete findings grounded in code, request handling, or clearly inferable behavior. The report should read like a professional application security assessment, not like a brainstorming dump or a raw taxonomy checklist. Prefer short, well-separated sections, compact metadata lines, and structured finding blocks that are easy to scan quickly. Do not produce giant uninterrupted walls of text and do not turn findings into essay-style prose. Present confirmed bugs as a clear list of findings sorted by severity, and make every finding self-contained. Each finding must show the exact problematic code location whenever it is available from the reviewed material, including file paths, symbols, and line references where possible. If a class of vulnerability is not present, explicitly say why it appears mitigated, based on specific code patterns, middleware, validation, or runtime behavior. If something cannot be fully confirmed from the available code or configuration, place it in an explicitly marked unverified area rather than turning uncertainty into a finding.
 
@@ -34,6 +34,10 @@ Treat this section as a focused inspection of raw object references wherever the
 # Security Misconfiguration
 
 Inspect the application, runtime, framework, and edge configuration for insecure defaults, exposed debug surfaces, inconsistent trust boundaries, and deployment-time mistakes that create attack opportunities even when business logic appears correct. Review whether production still exposes interactive API documentation, stack traces, excessive OpenAPI schemas, internal-only routes, debug logging, development CORS settings, permissive trusted host behavior, unsafe reverse proxy header handling, or SSR behavior that embeds data not meant for unauthenticated or cross-tenant use. In a Nuxt SSR and FastAPI environment, a real issue might be that server-rendered pages include serialized application state containing private user information, or that the backend exposes Swagger UI and all operation schemas on a public host. Misconfiguration also includes unsafe cache directives, permissive content-type handling, unvalidated forwarded headers, accidental public storage buckets, weak cookie attributes if any cookies exist, and mismatches between Cloudflare Worker behavior and origin expectations. Distinguish between harmless defaults and materially risky exposure by tying each observation to a realistic exploit path or data leak.
+
+# Vulnerable Dependencies / Third-Party Components
+
+Review the third-party dependency surface used by both the JavaScript and Python parts of the application and determine whether any library appears known-vulnerable, dangerously outdated, unsupported, unmaintained, or risky for production exposure. Inspect dependency manifests and lockfiles such as `package.json`, `package-lock.json`, `pnpm-lock.yaml`, `yarn.lock`, `requirements.txt`, `pyproject.toml`, `poetry.lock`, and similar files, and check whether the application depends on packages with publicly known CVEs, ecosystem advisories, or widely known security concerns. Treat this as part of the security review rather than as a separate maintenance concern. A real issue exists when a vulnerable library is present in the effective dependency set and is reachable in a way that could affect the application, especially in authentication, request parsing, SSR rendering, file handling, templating, cryptography, image processing, PDF processing, XML handling, or HTTP request flows. Distinguish between theoretical package age and a materially relevant security concern by tying the dependency to the application context, known advisory scope, transitive reachability, or runtime usage. If the reviewed material is insufficient to confirm the exact installed dependency graph, place that limitation in the unverified area rather than making unsupported claims.
 
 # Sensitive Data Exposure
 
@@ -173,6 +177,12 @@ Immediately below each finding title, use short labeled lines in this exact orde
 
 `Surface:` the endpoint, page flow, request path, or backend operation affected.
 
+`Problem:` state exactly what is wrong in one direct sentence.
+
+`Risk:` state why it is dangerous and what security property is being broken.
+
+`Should not be allowed:` state the behavior, access, state change, or data exposure that the system should never permit.
+
 `Evidence:` the specific code behavior, request handling pattern, missing check, unsafe sink, or observable implementation detail that proves the issue.
 
 `Exploit:` the realistic attacker action and the expected success signal, response, or state change.
@@ -183,7 +193,7 @@ Immediately below each finding title, use short labeled lines in this exact orde
 
 `Notes:` optional, use only for scope limits, exploit constraints, or partial mitigations.
 
-Keep each field concise. Prefer multiple short lines over long paragraphs. Use code formatting for paths, functions, models, routes, headers, claims, and dangerous fields.
+Keep each field concise. Prefer multiple short lines over long paragraphs. Use code formatting for paths, functions, models, routes, headers, claims, and dangerous fields. The core of each finding must answer these four questions clearly: what is the problem, why is it dangerous, how can it be exploited, and what must never be allowed.
 
 # Mitigated Areas
 
@@ -192,10 +202,6 @@ List the vulnerability classes that appear meaningfully mitigated. For each one,
 # Unverified Areas
 
 List the areas that could not be confidently confirmed from the available code or configuration. For each one, use short bullets with `Area:` and `Missing evidence:` lines.
-
-# Priority Remediation Order
-
-Finish with a short ordered list of the fixes that should be prioritized first, based on exploitability and impact.
 
 # Style Rules
 
@@ -206,4 +212,8 @@ Prefer exact code references over general descriptions.
 Prefer concrete endpoint names and file paths over abstract vulnerability summaries.
 
 Keep each finding compact and scannable so a reader can move from severity to vulnerable code location in seconds.
+
+The output should primarily present security problems, exploitability, risk, and forbidden behavior, not long educational theory.
+
+Do not add a `Priority Remediation Order` section and do not impose a fix order in the output. The report should describe the issues clearly, but remediation sequencing is decided separately by the reader.
 ```
