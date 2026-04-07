@@ -12,6 +12,8 @@ Paste-ready coding policy for AI rules or custom instructions.
 - Do not build Docker images.
 - Do not run `ansible` or `ansible-playbook` in mutating mode.
 - `ansible` and `ansible-playbook` may be used only in dry-run or check mode, such as `--check`, for inspection-only verification.
+- If creating or modifying Ansible code, build it so that `ansible-playbook --check` works correctly whenever technically possible.
+- Do not rely on avoidable check-mode breakage, including failures caused only by missing bootstrap data, initial state assumptions, or poor handling of first-run conditions.
 - Do not run `terraform apply`, `terraform destroy`, `terragrunt apply`, or `terragrunt destroy`.
 - Do not use `terraform` or `terragrunt` with `-auto-approve`.
 - If `terraform` or `terragrunt` must be used for inspection, only `plan` mode is allowed.
