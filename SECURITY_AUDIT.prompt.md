@@ -5,7 +5,7 @@ Paste-ready application security review prompt for AI rules or custom instructio
 ```markdown
 Perform a detailed security review of the entire web application and all publicly exposed APIs. Treat this as a real application security assessment performed by a senior application security analyst and pentester reviewing production-grade code, request flows, authorization logic, data models, middleware, input validation, SSR behavior, caching, file handling, integrations, and public edge components. The stack to assess includes a Vue 3 frontend, Nuxt 4 with SSR for SEO, a Python FastAPI backend, JWT-based authentication, human-friendly URLs where a readable slug ends with a suffix such as `-xxxx` that is parsed by the backend and used to resolve a record, and any public traffic that passes through Cloudflare Workers or equivalent edge logic. Ignore and do not report missing CAPTCHA because it will be added at the end of the project, ignore and do not report missing rate limiting because it is handled by Cloudflare, and ignore and do not report hardcoded secrets in application code because secrets are injected through Kubernetes. Do not dilute the review with generic advice, do not write a shallow checklist, do not invent findings without evidence, and do not rely on frontend assumptions when backend enforcement is required.
 
-Write the final report in English, in a technical but readable tone, with concrete findings grounded in code, request handling, or clearly inferable behavior. Structure the report with section headings and a clear list of findings, and for each listed bug provide a dense explanatory paragraph immediately below it. Each finding entry should be concise in title form, while the paragraph underneath should explain the vulnerable area, what to inspect in this application, how the bug would typically manifest, what a realistic exploit path would look like, what the API or page might return if the issue exists, how to distinguish a real vulnerability from a safe implementation, and what impact the issue would have. If a class of vulnerability is not present, explicitly say why it appears mitigated, based on specific code patterns, middleware, validation, or runtime behavior. If something cannot be fully confirmed from the available code or configuration, place it in an explicitly marked unverified area rather than turning uncertainty into a finding.
+Write the final report in English, in a technical but readable tone, with concrete findings grounded in code, request handling, or clearly inferable behavior. The report should read like a professional application security assessment, not like a brainstorming dump or a raw taxonomy checklist. Prefer short, well-separated sections, compact metadata lines, and structured finding blocks that are easy to scan quickly. Do not produce giant uninterrupted walls of text and do not turn findings into essay-style prose. Present confirmed bugs as a clear list of findings sorted by severity, and make every finding self-contained. Each finding must show the exact problematic code location whenever it is available from the reviewed material, including file paths, symbols, and line references where possible. If a class of vulnerability is not present, explicitly say why it appears mitigated, based on specific code patterns, middleware, validation, or runtime behavior. If something cannot be fully confirmed from the available code or configuration, place it in an explicitly marked unverified area rather than turning uncertainty into a finding.
 
 # Broken Access Control
 
@@ -145,5 +145,65 @@ Review whether the application produces enough security-relevant audit data to i
 
 # Output Format
 
-Begin the report with a concise explanation of the application trust model, including how authentication works, how tenant boundaries are supposed to work, how SEO-friendly slug-plus-suffix URLs are resolved, and where Cloudflare Workers or edge routing sit in front of the origin. After that, describe the endpoint and attack-surface inventory in prose, identifying what is public, what is authenticated, what is tenant-scoped, and what is high risk. Then present findings by severity in clearly titled sections, and for each confirmed issue explain the vulnerable endpoint or flow, the preconditions, the exact exploit scenario, the evidence from code or request handling, the likely response or behavior that proves the issue, the business and technical impact, and the precise remediation that would close the gap. If a vulnerability class was checked and appears mitigated, say that explicitly and state what concrete controls appear to protect it. If an area cannot be fully validated from the available material, place it in a separate unverified section rather than mixing uncertainty into confirmed findings.
+Use this exact high-level layout:
+
+# Executive Summary
+
+Start with 2 to 5 short bullet points explaining the overall security posture, the dominant risk themes, and whether the review found confirmed high-severity issues or mainly defense-in-depth concerns.
+
+# Risk Snapshot
+
+Add a short flat list with three to seven items summarizing the most important confirmed issues or the most important conclusions if no major bugs were found. Each item should be one line only.
+
+# Trust Model
+
+Explain how authentication works, how tenant boundaries are expected to work, how slug-plus-suffix URLs are resolved, and where Cloudflare Workers or edge routing sit in front of the origin.
+
+# Attack Surface
+
+Describe the public, authenticated, tenant-scoped, and high-risk surfaces in a short flat list. Keep this concise and focused on what matters for exploitation.
+
+# Confirmed Findings
+
+Group findings by severity using clear section headings in this exact order: `## Critical`, `## High`, `## Medium`, `## Low`. Under each severity section, present findings as a flat list. Each finding must start with a one-line title in the format `- [Severity] Short finding title`.
+
+Immediately below each finding title, use short labeled lines in this exact order:
+
+`Location:` exact file path, function, class, route, worker file, or component. Include line numbers whenever possible.
+
+`Surface:` the endpoint, page flow, request path, or backend operation affected.
+
+`Evidence:` the specific code behavior, request handling pattern, missing check, unsafe sink, or observable implementation detail that proves the issue.
+
+`Exploit:` the realistic attacker action and the expected success signal, response, or state change.
+
+`Impact:` the security consequence and what an attacker can gain or alter.
+
+`Fix:` the precise remediation that would close the issue.
+
+`Notes:` optional, use only for scope limits, exploit constraints, or partial mitigations.
+
+Keep each field concise. Prefer multiple short lines over long paragraphs. Use code formatting for paths, functions, models, routes, headers, claims, and dangerous fields.
+
+# Mitigated Areas
+
+List the vulnerability classes that appear meaningfully mitigated. For each one, use short bullets with `Area:` and `Why it appears mitigated:` lines. Keep this section concise.
+
+# Unverified Areas
+
+List the areas that could not be confidently confirmed from the available code or configuration. For each one, use short bullets with `Area:` and `Missing evidence:` lines.
+
+# Priority Remediation Order
+
+Finish with a short ordered list of the fixes that should be prioritized first, based on exploitability and impact.
+
+# Style Rules
+
+Use lists and labeled lines, not essay-like prose blocks.
+
+Prefer exact code references over general descriptions.
+
+Prefer concrete endpoint names and file paths over abstract vulnerability summaries.
+
+Keep each finding compact and scannable so a reader can move from severity to vulnerable code location in seconds.
 ```
