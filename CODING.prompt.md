@@ -10,7 +10,8 @@ Paste-ready coding policy for AI rules or custom instructions.
 - Only application-level tests may be executed.
 - Use the project's native test runner when tests exist.
 - Do not build Docker images.
-- Do not run `ansible` or `ansible-playbook`.
+- Do not run `ansible` or `ansible-playbook` in mutating mode.
+- `ansible` and `ansible-playbook` may be used only in dry-run or check mode, such as `--check`, for inspection-only verification.
 - Do not run `terraform apply`, `terraform destroy`, `terragrunt apply`, or `terragrunt destroy`.
 - Do not use `terraform` or `terragrunt` with `-auto-approve`.
 - If `terraform` or `terragrunt` must be used for inspection, only `plan` mode is allowed.
