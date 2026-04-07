@@ -32,6 +32,15 @@ Paste-ready coding policy for AI rules or custom instructions.
 - If the user says that access is available, for example by stating that you have access to `kubectl`, that is sufficient permission to perform read-only verification of the problem currently being worked on.
 - Allowed read-only actions include checking logs, status, configuration, running processes, resource health, mounted files, environment state, and similar inspection-only data.
 - This allowance may include commands through tools such as `kubectl`, `docker`, `docker compose`, `podman`, `ssh`, `journalctl`, `systemctl status`, and similar operational CLIs, but only for read-only verification.
+- Read-only diagnostic tools such as `curl`, `dig`, `nslookup`, `ss`, `netstat`, and `tcpdump` may also be used without special approval when they are used only to observe or inspect runtime behavior and do not modify state.
+- `helm template`, `helm lint`, and `helm unittest` are allowed for inspection and validation. `helm install`, `helm upgrade`, `helm rollback`, and `helm uninstall` require explicit user permission.
+- `kubectl get`, `kubectl describe`, `kubectl logs`, and `kubectl top` are allowed for read-only verification. `kubectl apply`, `kubectl delete`, `kubectl edit`, `kubectl patch`, `kubectl scale`, and `kubectl rollout restart` require explicit user permission.
+- `kubectl exec` is allowed only for read-only inspection inside a container. If the intended command would modify state inside the container or the workload, ask the user for permission first.
+- `kubectl cp` may be used to copy files or artifacts out of a pod or container for inspection and analysis. Do not use it to push modified content back into workloads without explicit user permission.
+- Database clients such as `psql`, `mysql`, `mongosh`, `redis-cli`, and similar tools may be used only for read-only inspection. Any write or state-changing action such as `INSERT`, `UPDATE`, `DELETE`, `ALTER`, `FLUSH`, or equivalent commands requires explicit user permission.
+- Cloud and platform CLIs such as `gcloud`, `aws`, `az`, `doctl`, and `gh` may be used for read-only inspection commands such as list, get, describe, view, or status. Any create, update, delete, or configuration-changing action requires explicit user permission.
+- `systemctl status` and `journalctl` are allowed for read-only inspection. `systemctl start`, `stop`, `restart`, `reload`, `enable`, and `disable` require explicit user permission.
+- Over `ssh`, reading files and inspecting host state is allowed. Editing files, running `chmod`, `chown`, `mv`, `rm`, installing packages, or changing configuration requires explicit user permission.
 - If a namespace, pod, deployment, service, cluster context, host, or similar runtime target is needed, infer it from the current task and repository context when reasonably possible.
 - Ask the user for the missing namespace or runtime target only when it cannot be safely or reasonably inferred from the available context.
 - Do not perform mutating operational actions without explicit user permission.
