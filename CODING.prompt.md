@@ -7,13 +7,23 @@ Paste-ready coding policy for AI rules or custom instructions.
 
 ## Build And Execution
 
+### General Execution
+
 - Only application-level tests may be executed.
 - Use the project's native test runner when tests exist.
 - Do not build Docker images.
+- Do not start services, databases, containers, or orchestration systems.
+- If a command could implicitly build containers or start infrastructure, treat it as forbidden.
+
+### Ansible
+
 - Do not run `ansible` or `ansible-playbook` in mutating mode.
 - `ansible` and `ansible-playbook` may be used only in dry-run or check mode, such as `--check`, for inspection-only verification.
 - If creating or modifying Ansible code, build it so that `ansible-playbook --check` works correctly whenever technically possible.
 - Do not rely on avoidable check-mode breakage, including failures caused only by missing bootstrap data, initial state assumptions, or poor handling of first-run conditions.
+
+### Terraform And Terragrunt
+
 - Do not run `terraform apply`, `terraform destroy`, `terragrunt apply`, or `terragrunt destroy`.
 - Do not use `terraform` or `terragrunt` with `-auto-approve`.
 - If `terraform` or `terragrunt` must be used for inspection, only `plan` mode is allowed.
@@ -23,28 +33,46 @@ Paste-ready coding policy for AI rules or custom instructions.
 - A typical stack may represent an application or service such as `api`, and may contain related infrastructure components such as instance groups, load balancers, image templates, networking pieces, security policies, and similar resources.
 - This stack-oriented assumption applies broadly across terragrunt-based repository structures for providers such as `gcp`, `azure`, `aws`, and similar clouds or infrastructure targets.
 - Scope every `terragrunt` plan to the narrowest relevant stack or resource directory for the issue being investigated. This rule applies to practically all terragrunt-based provider layouts.
+
+### Database Lifecycle
+
 - Do not run database migrations or data seed commands without explicit user permission, even when they are normally treated as a standard deployment step.
-- Do not start services, databases, containers, or orchestration systems.
-- If a command could implicitly build containers or start infrastructure, treat it as forbidden.
 
 ## Runtime Verification
+
+### Access And Scope
 
 - If the user explicitly asks to verify application state on Kubernetes, a deployment, a containerized environment, or an SSH-accessible host, read-only operational inspection is allowed.
 - If the user says that access is available, for example by stating that you have access to `kubectl`, that is sufficient permission to perform read-only verification of the problem currently being worked on.
 - Allowed read-only actions include checking logs, status, configuration, running processes, resource health, mounted files, environment state, and similar inspection-only data.
 - This allowance may include commands through tools such as `kubectl`, `docker`, `docker compose`, `podman`, `ssh`, `journalctl`, `systemctl status`, and similar operational CLIs, but only for read-only verification.
 - Read-only diagnostic tools such as `curl`, `dig`, `nslookup`, `ss`, `netstat`, and `tcpdump` may also be used without special approval when they are used only to observe or inspect runtime behavior and do not modify state.
+
+### Kubernetes And Helm
+
 - `helm template`, `helm lint`, and `helm unittest` are allowed for inspection and validation. `helm install`, `helm upgrade`, `helm rollback`, and `helm uninstall` require explicit user permission.
 - `kubectl get`, `kubectl describe`, `kubectl logs`, and `kubectl top` are allowed for read-only verification. `kubectl apply`, `kubectl delete`, `kubectl edit`, `kubectl patch`, `kubectl scale`, and `kubectl rollout restart` require explicit user permission.
 - `kubectl exec` is allowed only for read-only inspection inside a container. If the intended command would modify state inside the container or the workload, ask the user for permission first.
 - `kubectl cp` may be used to copy files or artifacts out of a pod or container for inspection and analysis. Do not use it to push modified content back into workloads without explicit user permission.
+
+### Databases And Cloud CLIs
+
 - Database clients such as `psql`, `mysql`, `mongosh`, `redis-cli`, and similar tools may be used only for read-only inspection. Any write or state-changing action such as `INSERT`, `UPDATE`, `DELETE`, `ALTER`, `FLUSH`, or equivalent commands requires explicit user permission.
 - Cloud and platform CLIs such as `gcloud`, `aws`, `az`, `doctl`, and `gh` may be used for read-only inspection commands such as list, get, describe, view, or status. Any create, update, delete, or configuration-changing action requires explicit user permission.
+
+### Host Inspection
+
 - `systemctl status` and `journalctl` are allowed for read-only inspection. `systemctl start`, `stop`, `restart`, `reload`, `enable`, and `disable` require explicit user permission.
 - Over `ssh`, reading files and inspecting host state is allowed. Editing files, running `chmod`, `chown`, `mv`, `rm`, installing packages, or changing configuration requires explicit user permission.
 - `sudo` may be used when needed. Read-only inspection may use `sudo` without extra approval beyond the inspection itself, but mutating actions performed through `sudo` still require explicit user permission.
+
+### Runtime Target Resolution
+
 - If a namespace, pod, deployment, service, cluster context, host, or similar runtime target is needed, infer it from the current task and repository context when reasonably possible.
 - Ask the user for the missing namespace or runtime target only when it cannot be safely or reasonably inferred from the available context.
+
+### Mutating Action Guardrails
+
 - Do not perform mutating operational actions without explicit user permission.
 - Mutating actions include but are not limited to deploy, apply, edit, delete, restart, scale, exec used to change state, file modification, package installation, database writes, secret rotation, or destructive cleanup.
 - If verifying the issue requires any state change, ask the user for permission before doing it.
