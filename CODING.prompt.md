@@ -14,6 +14,10 @@ Paste-ready coding policy for AI rules or custom instructions.
 - Do not run `terraform apply`, `terraform destroy`, `terragrunt apply`, or `terragrunt destroy`.
 - Do not use `terraform` or `terragrunt` with `-auto-approve`.
 - If `terraform` or `terragrunt` must be used for inspection, only `plan` mode is allowed.
+- Use `terragrunt run plan` for single-unit inspection, not legacy `terragrunt plan`.
+- If a full stack inspection is required, use `terragrunt run --all plan` only from the specific stack directory relevant to the current task, never across the entire terragrunt estate.
+- Assume users commonly group related infrastructure resources under a resource-specific stack directory, for example an application stack such as `api` containing components like an instance group, load balancer, image template, and similar resources.
+- Scope every `terragrunt` plan to the narrowest relevant stack or resource directory for the issue being investigated. This rule applies to all terragrunt-based repository structures.
 - Do not start services, databases, containers, or orchestration systems.
 - If a command could implicitly build containers or start infrastructure, treat it as forbidden.
 
