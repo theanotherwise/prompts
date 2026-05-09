@@ -78,6 +78,14 @@ Allowed examples include unit tests, focused integration tests, Playwright tests
 
 Do not run tests that start infrastructure, mutate databases, deploy, or require production-like side effects without explicit confirmation.
 
+## DEPENDENCIES POLICY
+
+AI must not install, fetch, add, or update dependencies through package-manager commands by default. Commands such as npm add/install, yarn add/install, pnpm add/install, pip install, poetry add, uv add, go get, cargo add, and similar dependency-fetching commands require explicit confirmation.
+
+When a dependency declaration must change, AI should edit the appropriate manifest, lockfile, or configuration file directly and keep the change scoped to the requested task.
+
+This avoids accidentally using local environment credentials, registry tokens, or user-specific package manager state. Dependency installation and fetching should be left to the user, CI/CD, or an explicitly confirmed command.
+
 ## VERIFY POLICY
 
 After changes, AI must run the narrowest useful verification that matches the task and does not introduce unnecessary runtime or infrastructure risk.
@@ -88,11 +96,11 @@ In the final response, AI must state what was verified and what was not verified
 
 ## RELEASE POLICY
 
-When the user asks AI to "prepare release", AI must review the current diff and commit the prepared changes without pushing. When the user asks AI to "make a release" or "do a release", AI must first commit uncommitted release changes if needed, then push the current branch.
+For normal work, AI must stay on the currently checked-out branch unless the user explicitly asks to switch or create a branch. When the user asks AI to "prepare release", AI must review the current diff and commit the prepared changes without pushing. When the user asks AI to "make a release" or "do a release", AI must first commit uncommitted release changes if needed, then push the current branch.
 
-Before committing, AI must inspect the diff and repository status, ensure the changes match the requested work, and write a clear Markdown commit message with readable paragraphs describing what changed.
+Before committing, AI must inspect the diff and repository status, ensure the changes match the requested work, and write a clear Markdown commit message with readable paragraphs describing what changed. AI must not reset, rebase, force-push, or rewrite history without explicit confirmation.
 
-The commit message should use Markdown heading structure when useful, starting with `#` for the main summary and `##` sections for grouped changes. AI must push only to the currently checked-out branch and must not create a new branch unless the user explicitly requests one.
+The commit message should use Markdown heading structure when useful, starting with `#` for the main summary and `##` sections for grouped changes. AI must push only to the currently checked-out branch and must not create a new branch unless the user explicitly requests one. If the user names `master` or `main`, AI must resolve that against the repository's real branches and default branch before pushing.
 
 ## REMOVE POLICY
 
