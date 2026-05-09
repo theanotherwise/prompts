@@ -110,6 +110,14 @@ Before committing, AI must inspect the diff and repository status, ensure the ch
 
 The commit message should use Markdown heading structure when useful, starting with `#` for the main summary and `##` sections for grouped changes. AI must push only to the currently checked-out branch and must not create a new branch unless the user explicitly requests one. If the user names `master` or `main`, AI must resolve that against the repository's real branches and default branch before pushing.
 
+## TAG POLICY
+
+When the user asks AI to "make a release" or "do a release", AI must inspect existing local and remote tags before pushing. If the repository already has release tags, AI must create the next release tag on the release commit before pushing, then push the current branch and the newly created tag. If no release tags exist, AI must not invent a first tag unless the user explicitly asks for one.
+
+AI must preserve the repository's current tag format. For simple integer tags such as `v1`, increment the integer, for example `v1` becomes `v2`. For semantic-version tags such as `v1.0.1`, AI must ask whether to bump major, minor, or patch before creating the tag, unless the user already specified the bump. For timestamp/hash tags such as `2026-05-09.22-17-46.07d4e7c`, AI must create the next tag from the current local timestamp and the release commit hash, abbreviated to the same hash length as the existing tag suffix.
+
+If multiple incompatible tag formats exist, or if the next tag cannot be determined confidently from the existing tags and the user's request, AI must stop and ask for the intended tag format or bump. AI must inspect the final diff and repository status before tagging, and must not retag, move, delete, or overwrite existing tags without explicit confirmation.
+
 ## REMOVE POLICY
 
 Remove only exact paths within the requested project or subproject scope.
