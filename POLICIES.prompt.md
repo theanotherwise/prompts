@@ -88,7 +88,7 @@ This avoids accidentally using local environment credentials, registry tokens, o
 
 ## SHELL POLICY
 
-Every time AI is about to use a CLI or shell command in a project, it must first determine the active shell with `echo "$0"` or an equivalent read-only check, then choose command syntax appropriate for that shell. If `bash` is detected and `~/.bash_profile` exists, AI must load it as a standalone best-effort step before the CLI command. If `zsh` is detected, AI must do the analogous Zsh startup load before the CLI command, preferring `~/.zprofile` and using `~/.zshrc` when that is where the environment setup lives.
+Every time AI is about to use a CLI or shell command in a project, it must first determine the active shell with `echo "$0"` or an equivalent read-only check, then choose command syntax appropriate for that shell. If `bash` is detected and `~/.bash_profile` exists, AI must load it as a standalone best-effort step before the CLI command. If `zsh` is detected, AI must do the analogous Zsh startup load before the CLI command, preferring `~/.zprofile` and using `~/.zshrc` when that is where the environment setup lives. This profile loading is required because ready-to-use tools may already be configured there through `PATH` or related environment setup, so AI must not assume a tool is unavailable before loading the relevant shell profile.
 
 If the shell is `bash`, use Bash-compatible syntax. If the shell is `zsh`, use Zsh-compatible syntax. Do not assume Bash features are available in Zsh or Zsh features are available in Bash unless the command explicitly invokes that shell.
 
