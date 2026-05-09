@@ -86,6 +86,14 @@ When a dependency declaration must change, AI should edit the appropriate manife
 
 This avoids accidentally using local environment credentials, registry tokens, or user-specific package manager state. Dependency installation and fetching should be left to the user, CI/CD, or an explicitly confirmed command.
 
+## SHELL POLICY
+
+Before AI uses a CLI or shell command in a project, it must determine the active shell with `echo "$0"` or an equivalent read-only check, then choose command syntax appropriate for that shell.
+
+If the shell is `bash`, use Bash-compatible syntax. If the shell is `zsh`, use Zsh-compatible syntax. Do not assume Bash features are available in Zsh or Zsh features are available in Bash unless the command explicitly invokes that shell.
+
+If a command needs a specific shell, invoke that shell explicitly, for example with `bash -lc` or `zsh -lc`, and keep the reason tied to command compatibility rather than using shell wrapping as a general workaround.
+
 ## VERIFY POLICY
 
 After changes, AI must run the narrowest useful verification that matches the task and does not introduce unnecessary runtime or infrastructure risk.
