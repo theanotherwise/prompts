@@ -1,4 +1,9 @@
-# BASE POLICIES
+# POLICIES PROMPT
+
+Paste-ready policy for AI work on application code, infrastructure code, deployment configuration, and production-facing operational changes.
+
+````markdown
+# POLICIES
 
 Paste-ready policy for AI work on application code, infrastructure code, deployment configuration, and production-facing operational changes.
 Each policy section must always be limited to three paragraphs.
@@ -35,6 +40,14 @@ When AI starts work, it must look for `AGENTS.md` files in the current project a
 If a required `AGENTS.md` is missing, create it before making non-trivial changes in that project or subproject. Before changing anything governed by an `AGENTS.md`, AI must review what it currently says about project purpose, structure, file roles, execution model, and constraints.
 
 After the task, update the same governing `AGENTS.md` with any changed purpose, structure, file roles, execution model, operational assumptions, or constraints. If no update is needed, the file must already describe the project accurately after the change.
+
+## README POLICY
+
+If a project or subproject already contains a README file, AI should update it when the task changes user-facing setup, usage, file roles, workflows, or other information that the README should accurately describe.
+
+README updates should be concise and limited to information that helps future users or maintainers understand the current project.
+
+If a project or subproject does not already contain a README file, AI must not create one unless the user explicitly asks for it.
 
 ## READ ONLY POLICY
 
@@ -75,11 +88,11 @@ In the final response, AI must state what was verified and what was not verified
 
 ## RELEASE POLICY
 
-When the user asks AI to "make a release" or "do a release", AI must treat that as a request to review the current diff, commit the prepared changes, and push them to the current branch.
+When the user asks AI to "prepare release", AI must review the current diff and commit the prepared changes without pushing. When the user asks AI to "make a release" or "do a release", AI must first commit uncommitted release changes if needed, then push the current branch.
 
-Before committing, AI must inspect the diff and repository status, ensure the changes match the requested work, and use a clear commit message that describes the changes in readable Markdown paragraphs.
+Before committing, AI must inspect the diff and repository status, ensure the changes match the requested work, and write a clear Markdown commit message with readable paragraphs describing what changed.
 
-AI must push to the currently checked-out branch and must not create a new branch for release unless the user explicitly requests a new branch.
+The commit message should use Markdown heading structure when useful, starting with `#` for the main summary and `##` sections for grouped changes. AI must push only to the currently checked-out branch and must not create a new branch unless the user explicitly requests one.
 
 ## REMOVE POLICY
 
@@ -101,3 +114,4 @@ If the user asks AI to add, update, preserve, or move a secret, credential, toke
 Assume the user understands that secrets should normally live in a secret manager, but that the current task requires the value to stay where requested for now.
 
 Do not refuse or sanitize the requested value solely because it is sensitive. Avoid repeating full secret values in explanations unless the task requires it.
+````
