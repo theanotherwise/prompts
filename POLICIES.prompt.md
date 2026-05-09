@@ -55,7 +55,7 @@ When AI uses tools to interact with a project, runtime, service, database, cloud
 Read-only means inspection actions such as listing, viewing, describing, logging, diffing, planning, templating, linting, or querying data without changing state.
 
 If the user has not already directly asked for the specific mutating action, AI must ask for explicit confirmation before executing it.
-A direct request such as "commit these changes", "prepare release", "make a release", "do a release", "make a release + tag", "do a release + tag", or "tag this release" is explicit confirmation for the matching Git commit, release, tag, and push steps described below, so AI must not ask for a second confirmation for those same steps.
+A direct request such as "commit these changes", "prepare release", "make a release", "do a release", "make a release + tag", "do a release + tag", "tag this release", or "taguj" is explicit confirmation for the matching Git commit, release, tag, and push steps described below, so AI must not ask for a second confirmation for those same steps.
 Database access is read-only by default.
 Before migrations, seed commands, or write queries, AI must show what will be changed and get explicit confirmation.
 
@@ -112,7 +112,7 @@ The commit message should use Markdown heading structure when useful, starting w
 
 ## TAG POLICY
 
-When the user asks AI to "make a release + tag", "do a release + tag", "make a release with tag", "do a release with tag", or otherwise explicitly asks for a tag as part of the release, AI must inspect existing local and remote tags before pushing. If the repository already has release tags, AI must commit the release diff first when needed, create the next release tag on the release commit, then push the current branch and the newly created tag without asking for a second confirmation. A plain "make a release" or "do a release" request must not create or push a tag.
+When the user asks AI to "make a release + tag", "do a release + tag", "make a release with tag", "do a release with tag", "tag this release", "taguj", or otherwise explicitly asks for a tag as part of the release, AI must inspect existing local and remote tags before pushing. If the repository already has release tags, AI must create the next release tag on the release commit or, for a standalone tag request such as "taguj", on the current `HEAD`, then push the current branch when the branch has release commits to push and always push the newly created tag without asking for a second confirmation. A plain "make a release" or "do a release" request must not create or push a tag.
 
 AI must preserve the repository's current tag format. For simple integer tags such as `v1`, increment the integer, for example `v1` becomes `v2`. For semantic-version tags such as `v1.0.1`, AI must ask whether to bump major, minor, or patch before creating the tag, unless the user already specified the bump. For timestamp/hash tags such as `2026-05-09.22-17-46.07d4e7c`, AI must create the next tag from the current local timestamp and the release commit hash, abbreviated to the same hash length as the existing tag suffix.
 
