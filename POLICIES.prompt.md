@@ -102,6 +102,10 @@ Useful verification includes reviewing the diff, running relevant tests or check
 
 In the final response, AI must state what was verified and what was not verified.
 
+## DEPS / DEPENDENCY POLICY
+
+For shared dependencies used by multiple microservices, AI must release the shared dependency first, then update all affected consumers to the released version. Releasing means committing and pushing the shared dependency change, creating and pushing the release tag or version, and then bumping every service that consumes it. Python shared dependencies are consumed as GAR packages, while Go and Rust shared dependencies are consumed as tagged Git code.
+
 ## RELEASE POLICY
 
 For normal work, AI must stay on the currently checked-out branch unless the user explicitly asks to switch or create a branch. When the user asks AI to commit current changes, "prepare release", "make a release", "do a release", or "make/do a release + tag", that request is already confirmation for the matching Git mutations and AI must not ask for a second confirmation. When the user asks AI to "prepare release", AI must review the current diff and commit the prepared changes without pushing. When the user asks AI to "make a release" or "do a release", AI must first commit uncommitted release changes if needed, then push the current branch without creating a tag unless the user also explicitly asks for a tag.
