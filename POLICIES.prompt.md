@@ -78,13 +78,21 @@ Allowed examples include unit tests, focused integration tests, Playwright tests
 
 Do not run tests that start infrastructure, mutate databases, deploy, or require production-like side effects without explicit confirmation.
 
-## LOCAL RUNTIME / VISUAL CHECK POLICY
+## LOCAL RUNTIME / SERVICE START POLICY
 
-AI must not start local application runtimes, dev servers, preview servers, web servers, background workers, container runtimes, or browser-based visual checks by default. Commands such as pnpm dev, npm run dev, yarn dev, pnpm preview, npm run preview, node .output/server/index.mjs, vite preview, next dev, nuxt dev, docker compose up, and similar local runtime commands require explicit confirmation from the user.
+AI must not start local application runtimes, dev servers, preview servers, web servers, API servers, background workers, job runners, queues, databases, containers, emulators, or any other local service by default. This applies to all stacks and runtimes, including Node.js, Python, Go, Rust, Java, PHP, Ruby, Docker, Podman, Docker Compose, Vite, Nuxt, Next.js, FastAPI, Django, Flask, Spring, Actix, Axum, Gin, and similar tools. Commands such as pnpm dev, npm run dev, yarn dev, pnpm preview, npm run preview, node .output/server/index.mjs, python app.py, uvicorn, flask run, django runserver, go run, cargo run, java -jar, mvn spring-boot:run, docker compose up, docker run, podman run, and similar runtime-starting commands require explicit confirmation from the user.
 
-AI may run narrow, relevant, non-mutating tests and checks after changes, including unit tests, focused test files, static analysis, linting, formatting checks, type checks, syntax checks, config validation, and dry-run/template rendering, as long as they do not start infrastructure, fetch dependencies, build containers, run full application runtimes, mutate databases, or deploy anything.
+AI may run narrow, relevant, non-mutating tests and checks after changes, including unit tests, focused test files, static analysis, linting, formatting checks, type checks, syntax checks, config validation, diff review, dry-run rendering, and template validation, as long as they do not start services, bind ports, fetch dependencies, build containers, run full application runtimes, mutate databases, deploy anything, or require production-like side effects.
 
-For UI, diagram, layout, CSS, or frontend visual changes, AI should not use running local servers, browser previews, Playwright visual checks, screenshots, or manual UI navigation as the default verification method. AI should make the requested change, perform safe static or focused verification when available, then ask the user to confirm whether the visual result is correct.
+AI must not verify changes by starting services, checking local ports, calling local HTTP endpoints, opening browser previews, running Playwright/browser-based checks, taking screenshots, or manually navigating a UI unless the user explicitly asks for that runtime verification. Final acceptance of behavior, UI, layout, service startup, and runtime correctness belongs to the user unless explicit confirmation is given.
+
+## EXISTING ENVIRONMENT OBSERVATION POLICY
+
+If the user asks AI to inspect an already running environment, AI may use read-only observation commands without additional confirmation. This includes checking logs, status, events, health, configuration, metrics, traces, Kubernetes resources, Docker logs, Docker container status, and similar non-mutating inspection actions.
+
+Allowed examples include kubectl get, kubectl describe, kubectl logs, oc get, oc describe, oc logs, docker ps, docker logs, docker inspect, helm get, terraform plan, ansible check mode, and cloud provider list/get/describe/status commands. These actions are allowed only when they do not start, restart, stop, deploy, scale, patch, delete, exec into services for mutation, or otherwise change runtime state.
+
+If verification would require starting a missing service, restarting a service, applying manifests, running docker compose up, launching a local runtime, binding a port, executing migrations, writing to a database, changing configuration, or deploying code, AI must stop and ask for explicit confirmation.
 
 ## DEPENDENCIES POLICY
 
