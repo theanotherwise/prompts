@@ -78,21 +78,21 @@ Allowed examples include unit tests, focused integration tests, Playwright tests
 
 Do not run tests that start infrastructure, mutate databases, deploy, or require production-like side effects without explicit confirmation.
 
-## LOCAL RUNTIME / SERVICE START POLICY
+LOCAL RUNTIME / SERVICE START POLICY
 
-AI must not start local application runtimes, dev servers, preview servers, web servers, API servers, background workers, job runners, queues, databases, containers, emulators, or any other local service by default. This applies to all stacks and runtimes, including Node.js, Python, Go, Rust, Java, PHP, Ruby, Docker, Podman, Docker Compose, Vite, Nuxt, Next.js, FastAPI, Django, Flask, Spring, Actix, Axum, Gin, and similar tools. Commands such as pnpm dev, npm run dev, yarn dev, pnpm preview, npm run preview, node .output/server/index.mjs, python app.py, uvicorn, flask run, django runserver, go run, cargo run, java -jar, mvn spring-boot:run, docker compose up, docker run, podman run, and similar runtime-starting commands require explicit confirmation from the user.
+AI must not start local runtimes, dev servers, preview servers, web/API servers, workers, queues, databases, containers, emulators, or any other services by default. This applies to all stacks, including Node.js, Python, Go, Rust, Java, Docker/Podman, Compose, Vite, Nuxt, Next.js, FastAPI, Django, Flask, Spring, Actix, Axum, Gin, and similar tools. Runtime-starting commands such as pnpm dev, npm run dev, pnpm preview, node .output/server/index.mjs, uvicorn, flask run, django runserver, go run, cargo run, java -jar, docker compose up, docker run, and similar commands require explicit user confirmation.
 
-AI may run narrow, relevant, non-mutating tests and checks after changes, including unit tests, focused test files, static analysis, linting, formatting checks, type checks, syntax checks, config validation, diff review, dry-run rendering, and template validation, as long as they do not start services, bind ports, fetch dependencies, build containers, run full application runtimes, mutate databases, deploy anything, or require production-like side effects.
+AI may run only narrow, relevant, non-mutating checks by default: unit tests, focused test files, static analysis, linting, formatting checks, type checks, syntax checks, config validation, diff review, dry-run rendering, and template validation. These checks are allowed only if they do not start services, bind ports, fetch dependencies, build containers, run full application runtimes, mutate databases, deploy, or cause production-like side effects.
 
-AI must not verify changes by starting services, checking local ports, calling local HTTP endpoints, opening browser previews, running Playwright/browser-based checks, taking screenshots, or manually navigating a UI unless the user explicitly asks for that runtime verification. Final acceptance of behavior, UI, layout, service startup, and runtime correctness belongs to the user unless explicit confirmation is given.
+AI must not verify changes by starting services, checking local ports, calling local HTTP endpoints, opening browser previews, running Playwright/browser checks, taking screenshots, or manually navigating UI unless the user explicitly asks for runtime verification. Final acceptance of behavior, UI, startup, and runtime correctness belongs to the user.
 
-## EXISTING ENVIRONMENT OBSERVATION POLICY
+EXISTING ENVIRONMENT OBSERVATION POLICY
 
-If the user asks AI to inspect an already running environment, AI may use read-only observation commands without additional confirmation. This includes checking logs, status, events, health, configuration, metrics, traces, Kubernetes resources, Docker logs, Docker container status, and similar non-mutating inspection actions.
+If the user asks AI to inspect an already running environment, AI may use read-only observation commands without extra confirmation. Allowed examples include kubectl/oc get, describe, logs, docker ps, docker logs, docker inspect, helm get, terraform plan, ansible check mode, and cloud list/get/describe/status commands.
 
-Allowed examples include kubectl get, kubectl describe, kubectl logs, oc get, oc describe, oc logs, docker ps, docker logs, docker inspect, helm get, terraform plan, ansible check mode, and cloud provider list/get/describe/status commands. These actions are allowed only when they do not start, restart, stop, deploy, scale, patch, delete, exec into services for mutation, or otherwise change runtime state.
+These actions are allowed only when they do not start, restart, stop, deploy, scale, patch, delete, exec for mutation, write data, change configuration, or otherwise modify runtime state.
 
-If verification would require starting a missing service, restarting a service, applying manifests, running docker compose up, launching a local runtime, binding a port, executing migrations, writing to a database, changing configuration, or deploying code, AI must stop and ask for explicit confirmation.
+If verification requires starting a missing service, restarting anything, applying manifests, running docker compose up, launching a runtime, binding a port, executing migrations, writing to a database, changing configuration, or deploying code, AI must stop and ask for explicit confirmation.
 
 ## DEPENDENCIES POLICY
 
