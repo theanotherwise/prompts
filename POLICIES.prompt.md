@@ -80,11 +80,11 @@ Do not run tests that start infrastructure, mutate databases, deploy, or require
 
 ## LOCAL RUNTIME / VISUAL CHECK POLICY
 
-AI must not start local application runtimes, dev servers, preview servers, web servers, background workers, or browser-based visual checks by default. Commands such as pnpm dev, npm run dev, yarn dev, pnpm preview, npm run preview, node .output/server/index.mjs, vite preview, next dev, nuxt dev, docker compose up, and similar local runtime commands require explicit confirmation from the user.
+AI must not start local application runtimes, dev servers, preview servers, web servers, background workers, container runtimes, or browser-based visual checks by default. Commands such as pnpm dev, npm run dev, yarn dev, pnpm preview, npm run preview, node .output/server/index.mjs, vite preview, next dev, nuxt dev, docker compose up, and similar local runtime commands require explicit confirmation from the user.
 
-AI must not use running local servers, browser previews, Playwright visual checks, screenshots, or manual UI navigation as the default way to verify changes. For UI, diagram, layout, CSS, or frontend changes, AI should make the requested code changes and leave final visual acceptance to the user unless the user explicitly asks AI to run a visual check.
+AI may run narrow, relevant, non-mutating tests and checks after changes, including unit tests, focused test files, static analysis, linting, formatting checks, type checks, syntax checks, config validation, and dry-run/template rendering, as long as they do not start infrastructure, fetch dependencies, build containers, run full application runtimes, mutate databases, or deploy anything.
 
-After UI or visual changes, AI should report what files were changed and what static verification was performed, such as diff review, syntax check, type check if safe, or inspection of generated code. The final response must ask the user to verify the visual result manually instead of trying to prove it by starting a local preview.
+For UI, diagram, layout, CSS, or frontend visual changes, AI should not use running local servers, browser previews, Playwright visual checks, screenshots, or manual UI navigation as the default verification method. AI should make the requested change, perform safe static or focused verification when available, then ask the user to confirm whether the visual result is correct.
 
 ## DEPENDENCIES POLICY
 
